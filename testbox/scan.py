@@ -1,5 +1,5 @@
 import os
-
+import re
 
 class Scan:
 
@@ -33,7 +33,25 @@ class Scan:
                     scanned_lines.append(line)
             return scanned_lines
 
+    def trim_string(self, string):
+        string = string[0]
+        string = string[1:-1]
+        return string
+
+    def parse(self, file_lines):
+        methods = []
+        for line in file_lines:
+            method_name = re.findall(r"\s.+\({1}", line)
+            method_name = self.trim_string(method_name)
+            methods.append(method_name)
+
+            method_args = re.findall(r"\({1}.+\){1}", line)
+            if method_args:
+                method_args = trim_string(method_args)
+                method_args = method_args.split(",")
+                print(method_args)
+
     def scan(self):
         self.check_extension(self.path)
         file_contents = self.scan_by_line(self.path)
-        print(file_contents)
+        self.parse(file_contents)
