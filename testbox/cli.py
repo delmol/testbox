@@ -1,6 +1,7 @@
 import click
 import os
 from pathlib import Path
+import scan
 
 """
 CLI Method
@@ -21,7 +22,8 @@ def cli(path):
             raise SystemExit(1)
         else:
             print("File exists")
-            """process file"""
+            scan_file = scan.Scan(item)
+            scan_file.scan()
 
 
 if __name__ == '__main__':
